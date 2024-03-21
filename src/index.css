@@ -44,7 +44,6 @@ img{
   padding:0;
 }
 dialog{
-  
   background-color: beige;
   width:25rem;
   height:auto;
@@ -57,4 +56,22 @@ dialog{
   outline: none;
   border:none;
   margin-bottom: 2rem;
+}
+
+#note-body{
+  width:99%;
+  height:90%;
+}
+#content{
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+#content-body{
+ 
+  background-color: bisque;
+  display: flex;
+  flex-direction: column;
+ 
 }

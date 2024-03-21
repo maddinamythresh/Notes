@@ -1,31 +1,43 @@
-import { useRef, useState } from "react";
-import Modal from "./Modal";
-export default function Task() {
-  const [data,setData]=useState([])  
-  const ref = useRef();
-  function handleClick() {
-    ref.current.showModal();
+import { useState,createContext, useCallback} from "react";
+import Modal from "./Modal.jsx";
+import Display from "./Display.jsx";
+export const modalContext=createContext()
+
+
+let oper=[null,null,null]
+export default function Task(){
+  
+  const [val,setVal]=useState([])
+  const [modal,setModal]=useState(false)
+  function handleAddNote(){
+    setModal((mo)=>{return !mo});
   }
-  function handleData(val){
-    console.log("hello");
-    setData((previous)=>{
-        let updated=[]
-        for(const c of previous){
-            
-        }
-        return updated;
-    })
-    ref.current.close();
+  function handleVal(value){
+    setVal((previous)=>{return [value,...previous]})  
+  }
+  function handleDelete(value){ 
+    setVal(value)
+  }
+  function handleEdit(index){
+    oper=[...val[index]]
+    oper.push(index)   
+    handleAddNote()
+  }
+  function handleoper(){
+    oper=[null,null,null]
+
   }
 
-  console.log("Task playing");
-  return (
-    <div>
-      <Modal ref={ref} handles={handleData}/>
-      <div id="card">
-        <p>Add Task</p>
-        <button onClick={handleClick}> +</button>
-      </div>
-    </div>
-  );
+  const p={
+    editSet:handleEdit,valSet:handleVal,modSet:handleAddNote,mode:val,opSet:handleoper,deleteSet:handleDelete
+  }
+  console.log("Task loading");
+  console.log(val);
+
+  return(
+  <modalContext.Provider value={p}>
+    {modal && <Modal values={oper}/>}
+   <button onClick={handleAddNote}>+</button>
+   {!modal &&<Display value={oper} />}
+  </modalContext.Provider>)
 }
